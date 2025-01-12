@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Library{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1 class="site-title">My Library</h1>
+        <nav>
+            <ul class="nav-list">
+                {% if request.resolver_match.url_name != 'login' and request.resolver_match.url_name != 'register' %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'book_list' %}">Books</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'author_list' %}">Authors</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'my_orders' %}">My Orders</a></li>
+                    {% if request.user.role == 1 %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user_list' %}">Users</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'order_list' %}">Orders</a></li>
+                    {% endif %}
+                    <li class="nav-item nav-right">
+                        <div class="logout-container">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button class="btn-logout" type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item nav-right">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main class="main-content">
+        {% block content %}{% endblock %}
+        <br>
+        {% if request.resolver_match.url_name != 'home' %}
+            <button class="btn-back" onclick="goBack()">Back</button>
+        {% endif %}
+    </main>
+</body>
+</html>

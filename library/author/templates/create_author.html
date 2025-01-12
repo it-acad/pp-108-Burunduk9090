@@ -1,0 +1,15 @@
+<!-- authors/templates/create_author.html -->
+<h1>Create New Author</h1>
+<form method="post" action="{% url 'create_author' %}">
+  {% csrf_token %}
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="surname">Surname:</label>
+  <input type="text" id="surname" name="surname" required><br>
+
+  <label for="patronymic">Patronymic:</label>
+  <input type="text" id="patronymic" name="patronymic" required><br>
+
+  <button type="submit">Create</button>
+</form>

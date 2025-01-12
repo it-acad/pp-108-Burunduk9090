@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Order List</h2>
+<ul class="order-list">
+    {% for order in orders %}
+        <li class="order-item">
+            <a class="order-link" href="{% url 'order_detail' order.pk %}">{{ order.book.name }}</a> ordered by {{ order.user.email }}
+            <div class="button-group">
+                {% if request.user.is_authenticated and request.user.role == 1 %}
+<!--                    <form method="post" action="{% url 'order_update' order.pk %}">-->
+<!--                        <button class="btn-edit" type="submit">Edit</button>-->
+<!--                    </form>-->
+                    <form method="post" action="{% url 'order_delete' order.pk %}">
+                        {% csrf_token %}
+                        <button class="btn-delete" type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

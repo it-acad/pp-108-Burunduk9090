@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Order Form{% endblock %}
+
+{% block content %}
+<h2 class="section-title">{{ order.pk|default:"Create New Order" }}</h2>
+<form method="post" class="form-order">
+    {% csrf_token %}
+    <label for="book">Book:</label>
+    <select id="book" name="book" required>
+        {% for book in books %}
+            <option value="{{ book.pk }}" {% if order.book.pk == book.pk %}selected{% endif %}>{{ book.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="user">User:</label>
+    <select id="user" name="user" required>
+        {% for user in users %}
+            <option value="{{ user.pk }}" {% if order.user.pk == user.pk %}selected{% endif %}>{{ user.email }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label for="plated_end_at">Planned End At:</label>
+    <input type="datetime-local" id="plated_end_at" name="plated_end_at" value="{{ order.plated_end_at|date:'Y-m-d\\TH:i' }}" required><br><br>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <button class="btn-submit" type="submit">{{ order.pk|default:"Add" }}</button>
+</form>
+{% endblock %}

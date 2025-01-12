@@ -72,11 +72,13 @@ class CustomUser(AbstractBaseUser):
     middle_name = models.CharField(max_length=20, default=None)
     email = models.CharField(max_length=100, unique=True, default=None)
     password = models.CharField(default=None, max_length=255)
-    created_at = models.DateTimeField(editable=False, auto_now=datetime.datetime.now())
+    created_at = models.DateTimeField(editable=False, auto_now_add=datetime.datetime.now())
     updated_at = models.DateTimeField(auto_now=datetime.datetime.now())
     role = models.IntegerField(choices=ROLE_CHOICES, default=0)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     id = models.AutoField(primary_key=True)
+    # is_staff = models.BooleanField(default=False)
+    # is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     objects = CustomUserManager()
@@ -230,3 +232,4 @@ class CustomUser(AbstractBaseUser):
         returns str role name
         """
         return ROLE_CHOICES[self.role][1]
+

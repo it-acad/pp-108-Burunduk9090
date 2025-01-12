@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Author Details{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Author Details</h2>
+<p><strong>Name:</strong> {{ author.name }}</p>
+<p><strong>Surname:</strong> {{ author.surname }}</p>
+<p><strong>Patronymic:</strong> {{ author.patronymic }}</p>
+
+<h3 class="section-title">Books by Author</h3>
+<ul class="book-list">
+    {% for book in books %}
+        <li class="book-item">
+            <a class="book-link" href="{% url 'book_detail' book.pk %}">{{ book.name }}</a>
+            <div class="button-group">
+                <form method="post" action="{% url 'add_to_order' book.pk %}">
+                    {% csrf_token %}
+                    <button class="btn-order" type="submit">Order</button>
+                </form>
+                {% if request.user.is_authenticated and request.user.role == 1 %}
+                    <a class="btn-edit" href="{% url 'author_update' author.pk %}">Edit</a>
+                    <form method="post" action="{% url 'author_delete' author.pk %}">
+                        {% csrf_token %}
+                        <button class="btn-delete" type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Book Form{% endblock %}
+
+{% block content %}
+<h2 class="section-title">{{ book.pk|default:"Create New Book" }}</h2>
+<form method="post" class="form-book">
+    {% csrf_token %}
+    <label for="name">Title:</label>
+    <input type="text" id="name" name="name" value="{{ book.name|default:'' }}" required><br><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required>{{ book.description|default:'' }}</textarea><br><br>
+
+    <label for="count">Count:</label>
+    <input type="number" id="count" name="count" value="{{ book.count|default:10 }}" required><br><br>
+
+    <label for="authors">Authors:</label>
+    <select id="authors" name="authors" multiple required>
+        {% for author in authors %}
+            <option value="{{ author.id }}" {% if book and author in book.authors.all %}selected{% endif %}>{{ author.name }} {{ author.surname }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <button class="btn-submit" type="submit">{{ book.pk|default:"Add" }}</button>
+</form>
+{% endblock %}

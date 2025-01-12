@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Order Details</h2>
+<p><strong>Book:</strong> {{ order.book.name }}</p>
+<p><strong>User:</strong> {{ order.user.email }}</p>
+<p><strong>Created at:</strong> {{ order.created_at }}</p>
+<p><strong>End at:</strong> {{ order.end_at }}</p>
+<p><strong>Plated end at:</strong> {{ order.plated_end_at }}</p>
+
+<div class="button-group">
+    {% if request.user.is_authenticated and request.user.role == 1 %}
+        <form method="post" action="{% url 'order_delete' order.pk %}">
+            {% csrf_token %}
+            <button class="btn-delete" type="submit">Delete</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

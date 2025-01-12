@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Author Form{% endblock %}
+
+{% block content %}
+<h2 class="section-title">{{ author.pk|default:"Create New Author" }}</h2>
+<form method="post" class="form-author">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ author.name|default:'' }}" required><br><br>
+
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" name="surname" value="{{ author.surname|default:'' }}" required><br><br>
+
+    <label for="patronymic">Patronymic:</label>
+    <input type="text" id="patronymic" name="patronymic" value="{{ author.patronymic|default:'' }}" required><br><br>
+
+    <button class="btn-submit" type="submit">{{ author.pk|default:"Add" }}</button>
+</form>
+{% endblock %}

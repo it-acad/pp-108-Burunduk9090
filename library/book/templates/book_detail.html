@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Book Details{% endblock %}
+
+{% block content %}
+<h2>{{ book.name }}</h2>
+<p>Description: {{ book.description }}</p>
+<p>Count: {{ book.count }}</p>
+
+<h3>Book Authors</h3>
+<ul>
+    {% for author in book.authors.all %}
+        <li>
+            <a href="{% url 'author_detail' author.pk %}">{{ author.name }} {{ author.surname }}</a>
+            <form method="post" action="{% url 'add_to_order' book.pk %}">
+                {% csrf_token %}
+                <button type="submit">Order</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if request.user.is_authenticated and request.user.role == 1 %}
+    <a href="{% url 'book_update' book.pk %}">Edit</a>
+    <form method="post" action="{% url 'book_delete' book.pk %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+{% endif %}
+{% endblock %}

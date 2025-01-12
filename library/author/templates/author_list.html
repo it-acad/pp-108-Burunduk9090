@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Author List{% endblock %}
+
+{% block content %}
+<h2 class="section-title">Author List</h2>
+<ul class="author-list">
+    {% for author in authors %}
+        <li class="author-item">
+            <a class="author-link" href="{% url 'author_detail' author.pk %}">{{ author.name }} {{ author.surname }}</a>
+            <div class="button-group">
+                {% if request.user.is_authenticated and request.user.role == 1 %}
+
+                    <form method="post" action="{% url 'author_delete' author.pk %}">
+                        {% csrf_token %}
+                        <button class="btn-delete" type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% if request.user.is_authenticated and request.user.role == 1 %}
+    <a class="btn-add" href="{% url 'author_create' %}">Add Author</a>
+{% endif %}
+{% endblock %}

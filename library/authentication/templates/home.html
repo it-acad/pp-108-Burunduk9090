@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <h1 class="welcome-title">Welcome, {{ request.user.first_name }}!</h1>
+    <p class="welcome-message">We are glad to welcome you to our library. Here you can browse all books, place orders, and manage your orders.</p>
+</div>
+{% endblock %}
