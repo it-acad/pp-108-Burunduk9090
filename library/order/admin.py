@@ -11,7 +11,7 @@ class OrderAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('user', 'book')
         }),
-        ('Дати', {
+        ('Dates', {
             'fields': ('created_at', 'plated_end_at', 'end_at')
         }),
     )

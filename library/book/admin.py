@@ -8,10 +8,10 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ('id', 'name', 'year_of_publication')
 
     fieldsets = (
-        ('Незмінні Дані', {
+        ('Immutable Data', {
             'fields': ('name', 'year_of_publication', 'authors')
         }),
-        ('Змінні Дані', {
+        ('Mutable Data', {
             'fields': ('description', 'count')
         }),
     )

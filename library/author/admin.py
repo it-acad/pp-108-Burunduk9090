@@ -7,7 +7,7 @@ class AuthorAdmin(admin.ModelAdmin):
     search_fields = ('name', 'surname')
     list_filter = ('id', 'name')
     fieldsets = (
-        ('Основні Відомості', {
+        ('Basic Information', {
             'fields': ('name', 'surname', 'patronymic')
         }),
     )
