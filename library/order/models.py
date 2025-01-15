@@ -1,4 +1,5 @@
 from django.db import models, DataError
+from django.urls import reverse
 
 from authentication.models import CustomUser
 from book.models import Book
@@ -45,6 +46,9 @@ class Order(models.Model):
                    f" \'created_at\': \'{self.created_at}\'," \
                    f" \'end_at\': \'{self.end_at}\'," \
                    f" \'plated_end_at\': \'{self.plated_end_at}\'"
+
+    def get_absolute_url(self):
+        return reverse('order_detail', kwargs={'pk': self.pk})
 
     def __repr__(self):
         """

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'order',
 ]
 
+
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
 MIDDLEWARE = [
